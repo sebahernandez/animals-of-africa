@@ -5,6 +5,15 @@ export const PixabayContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [data, setData] = useState(null);
+  const [favorites, setFavorites] = useState([]);
+
+  const addFavorite = (image) => {
+    setFavorites([...favorites, image]);
+  };
+
+  const removeFavorite = (image) => {
+    setFavorites(favorites.filter((favorite) => favorite.id !== image.id));
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,7 +22,7 @@ const AuthProvider = ({ children }) => {
           "https://pixabay.com/api/?key=32664718-9cee0a4502f47e66ad6d59ba8&q=africa+Animals&image_type=photo&per_page=40"
         );
         const data = await response.json();
-        console.log(data.hits);
+
         setData(data.hits);
       } catch (error) {
         console.error("Error fetching data from Pixabay:", error);
@@ -24,7 +33,9 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <PixabayContext.Provider value={{ data }}>
+    <PixabayContext.Provider
+      value={{ data, setData, favorites, addFavorite, removeFavorite }}
+    >
       {children}
     </PixabayContext.Provider>
   );

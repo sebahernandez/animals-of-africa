@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import Masonry from "react-masonry-css";
+import { FavoriteButton } from "./FavoriteButton";
 
 const breakpointColumnsObj = {
   default: 4,
@@ -16,8 +17,15 @@ export const CardExample = ({ data }) => {
       columnClassName="my-masonry-grid_column"
     >
       {data.map((item, index) => (
-        <div key={index}>
-          <img src={item.webformatURL} alt={item.tags.split(",")[0]} />
+        <div key={index} style={{ position: "relative" }}>
+          <img
+            src={item.webformatURL}
+            alt={item.tags.split(",")[0]}
+            style={{ width: "100%", display: "block" }}
+          />
+          <div style={{ position: "absolute", top: 10, right: 10 }}>
+            <FavoriteButton item={item} />
+          </div>
         </div>
       ))}
     </Masonry>

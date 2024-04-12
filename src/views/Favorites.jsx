@@ -1,12 +1,16 @@
 import { useContext } from "react";
-import { PixabayContext } from "../context/PixabayContext"; // Adjust the path as necessary
+import { PixabayContext } from "../context/PixabayContext";
 import { CardExample } from "../components/Card";
 
 const Favorites = () => {
-  const { data } = useContext(PixabayContext);
+  const { favorites } = useContext(PixabayContext);
   return (
-    <div className="container-fluid " style={{ marginTop: "30px" }}>
-      {data ? <CardExample data={data} /> : <p>Loading images...</p>}
+    <div className="container-fluid" style={{ marginTop: "30px" }}>
+      {favorites.length > 0 ? (
+        <CardExample data={favorites} />
+      ) : (
+        <p>Debes seleccionar tus imagenes favoritas.</p>
+      )}
     </div>
   );
 };
